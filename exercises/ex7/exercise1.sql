@@ -112,9 +112,19 @@ JOIN titles AS t
 GROUP BY s.stor_id, t.type;
 
 --- complete query
-SELECT s.stor_name, t.type FROM stores AS s
-JOIN salesdetail as sd
-    ON sd.stor_id = s.stor_id
-JOIN titles AS t
-    ON sd.title_id = t.title_id
-GROUP BY s.stor_id, t.type;
+SELECT t1.stor_name, COUNT() AS anzahl FROM (
+    SELECT s.stor_name, t.type FROM stores AS s
+    JOIN salesdetail as sd
+        ON sd.stor_id = s.stor_id
+    JOIN titles AS t
+        ON sd.title_id = t.title_id
+    GROUP BY s.stor_id, t.type
+) t1
+GROUP BY t1.stor_name
+HAVING anzahl = (
+    SELECT COUNT() - 1 FROM (
+        SELECT type FROM titles
+        GROUP BY type
+    ) 
+);
+
