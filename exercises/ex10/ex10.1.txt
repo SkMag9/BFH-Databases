@@ -1,0 +1,11 @@
+// Exercise 10 
+Miszczuk, Streit
+
+--Aufgabe 1
+1. Nein
+2. nicht zwingend, ist jedoch möglich
+3. 0 oder mehr
+4. Ja, ein Redaktreur ist zwingend ein Angestellter und ein Angestellter kann mehrere Rollen haben, also ist es auch möglich, dass ein Redakteur auch ein Designer ist und somit ein Dokument designen kann. 
+5. Ja, es gibt keine Einschränkung.
+
+
