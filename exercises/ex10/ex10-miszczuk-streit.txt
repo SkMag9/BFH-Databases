@@ -1,5 +1,14 @@
--- Exercise 10
+-- Exercise 10 
 -- Miszczuk, Streit
+
+--Aufgabe 1
+1. Nein
+2. nicht zwingend, ist jedoch möglich
+3. 0 oder mehr
+4. Ja, ein Redaktreur ist zwingend ein Angestellter und ein Angestellter kann mehrere Rollen haben, also ist es auch möglich, dass ein Redakteur auch ein Designer ist und somit ein Dokument designen kann. 
+5. Ja, es gibt keine Einschränkung.
+
+
 
 -- Aufhabe 2 - Kino
 DROP TABLE IF EXISTS film;
@@ -102,3 +111,78 @@ FOREIGN KEY (vorstellungID)
 REFERENCES vorstellung (vorstellungID)
 );
 
+-- Aufhabe 3 - Handelsfirma
+-- 3.2
+DROP TABLE IF EXISTS kunde;
+CREATE TABLE kunde(
+kundeID INT NOT NULL,
+holdingID INT,
+firmaID INT,
+typ TEXT,
+kundenname TEXT,
+CONSTRAINT kunde_pkey
+PRIMARY KEY (kundeID),
+CONSTRAINT kunde_holding_fkey
+FOREIGN KEY (holdingID)
+REFERENCES kunde (kundeID),
+CONSTRAINT kunde_firma_fkey
+FOREIGN KEY (firmaID)
+REFERENCES kunde (kundeID)
+);
+
+DROP TABLE IF EXISTS produkt;
+CREATE TABLE produkt (
+produktID INT NOT NULL,
+produktname TEXT NOT NULL,
+CONSTRAINT produkt_pkey
+PRIMARY KEY (produktID)
+);
+
+DROP TABLE IF EXISTS verkauf;
+CREATE TABLE verkauf (
+verkaufID INT NOT NULL,
+kundeID INT NOT NULL,
+produktID INT NOT NULL,
+preis DECIMAL(10,2) NOT NULL,
+menge INT NOT NULL,
+lieferdatum TEXT NOT NULL,
+CONSTRAINT verkauf_pkey
+PRIMARY KEY (verkaufID),
+CONSTRAINT verkauf_kunde_fkey
+FOREIGN KEY (kundeID)
+REFERENCES kunde (kundeID),
+CONSTRAINT verkauf_produkt_fkey
+FOREIGN KEY (produktID)
+REFERENCES produkt (produktID)
+);
+
+
+-- Aufhabe 3 - Handelsfirma
+-- 3.3
+-- a
+SELECT produktname FROM produkt AS p
+JOIN verkauf AS v
+    ON v.produktID = p.produktID
+WHERE v.lieferdatum < "2005-12-01"
+GROUP BY produktID;
+
+-- b
+SELECT produktname FROM produkt AS p
+JOIN verkauf AS v
+    ON v.produktID = p.produktID
+JOIN kunde AS k
+    ON v.kundeID = k.kundeID
+WHERE k.kundenname = "ABC Holding"
+GROUP BY produktID;
+
+-- c
+SELECT produktname, filialen.kundenname, firmen.kundenname, holding.kundenname FROM produkt AS p
+JOIN verkauf AS v
+    ON v.produktID = p.produktID
+JOIN kunde AS holding
+    ON v.kundeID = holding.kundeID
+JOIN kunde AS firmen
+    ON firmen.holdingID = k.kundeID
+JOIN kunde AS filialen
+    ON filialen.firmaID = k.kundeID
+WHERE k.kundenname = "ABC Holding";
