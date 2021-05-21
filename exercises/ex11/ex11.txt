@@ -1,0 +1,29 @@
+## Miszczuk, Streit
+# Aufgabe 1
+A->C
+B->D
+D->B
+
+# Aufgabe 2
+F⁺ = {  A->A, A->B, A->C, A->AB, A->AC, A->BC, A->ABC,
+        B->B, B->A, B->C, B->AB, B->AC, B->BC, B->ABC,
+        C->C, C->A, 
+        AB->A, AB->B, AB->C, AB->AB, AB->AC, AB->BC, AB->ABC,
+        AC->A, AC->B, AC->C, AC->AB, AC->AC, AC->BC, AC->ABC,
+        BC->A, BC->B, BC->BC, BC->C, BC-> AB, BC->AC, BC->ABC,
+        ABC->A, ABC->B, ABC-> C, ABC->AB, ABC->AC, ABC->BC, ABC->ABC
+    }
+
+# Aufgabe 3
+Reisen1(Destination, Reisebüro, Kunde)
+Reisen2(Destination, LieblingsReisebüro, Kunde)
+
+Schema 1: 
+1. Ja, besser wäre es ein zweites Schema zu haben, welches man mit dem Kunden verknüpft: Reise(Reisebüro, Destination)
+2. Keine 
+3. Nein
+
+Schema 2: 
+1. Nein
+2. Kunde->LieblingsReisebüro
+3. Ja
